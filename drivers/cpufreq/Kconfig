@@ -121,6 +121,12 @@ config CPU_FREQ_DEFAULT_GOV_NIGHTMARE
 	help
 	  Use the CPUFreq governor 'nightmare' as default
 
+config CPU_FREQ_DEFAULT_GOV_INTERACTIVEX2
+	bool "interactivex2"
+	select CPU_FREQ_GOV_INTERACTIVEX2
+	help
+	  Use the CPUFreq governor 'interactivex2' as default
+
 endchoice
 
 config CPU_FREQ_GOV_PERFORMANCE
@@ -228,6 +234,10 @@ config CPU_FREQ_GOV_CONSERVATIVE
 	  For details, take a look at linux/Documentation/cpu-freq.
 
 	  If in doubt, say N.
+
+config CPU_FREQ_GOV_INTERACTIVEX2
+	tristate "'interactivex2' cpufreq governor"
+	depends on CPU_FREQ
 
 menu "x86 CPU frequency scaling drivers"
 depends on X86
