@@ -184,7 +184,7 @@ do {									\
 #define WL_AF_SEARCH_TIME_MAX           450
 #define WL_AF_TX_EXTRA_TIME_MAX         200
 
-#define WL_SCAN_TIMER_INTERVAL_MS	10000 /* Scan timeout */
+#define WL_SCAN_TIMER_INTERVAL_MS	180000 /* Scan timeout */
 #define WL_CHANNEL_SYNC_RETRY 	5
 #define WL_INVALID 		-1
 
