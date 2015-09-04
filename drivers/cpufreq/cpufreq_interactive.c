@@ -945,8 +945,12 @@ static ssize_t store_hispeed_freq(struct kobject *kobj,
 				  struct attribute *attr, const char *buf,
 				  size_t count)
 {
-	int ret;
+	int ret = 0;
 	long unsigned int val;
+
+	int mpd = strcmp(current->comm, "mpdecision");
+	if (mpd == 0)
+		return ret;
 
 	ret = strict_strtoul(buf, 0, &val);
 	if (ret < 0)
@@ -994,8 +998,12 @@ static ssize_t show_go_hispeed_load(struct kobject *kobj,
 static ssize_t store_go_hispeed_load(struct kobject *kobj,
 			struct attribute *attr, const char *buf, size_t count)
 {
-	int ret;
+	int ret = 0;
 	unsigned long val;
+
+	int mpd = strcmp(current->comm, "mpdecision");
+	if (mpd == 0)
+		return ret;
 
 	ret = strict_strtoul(buf, 0, &val);
 	if (ret < 0)
