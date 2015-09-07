@@ -50,7 +50,7 @@
 #include <linux/wakelock.h>
 #include <linux/mutex.h>
 
-static int touch_gesture_enable = 0;
+static int touch_gesture_enable = 1;
 static struct wake_lock touch_wake_lock;
 static struct mutex i2c_suspend_lock;
 static struct mutex lpwg_lock;
@@ -4614,6 +4614,9 @@ static ssize_t show_touch_gesture(struct lge_touch_data *ts, char *buf)
 static ssize_t store_touch_gesture(struct lge_touch_data *ts, const char *buf, size_t count)
 {
 	int value;
+
+	return count;
+
 #if !defined(CONFIG_MACH_MSM8974_G2_OPEN_COM) && !defined(CONFIG_MACH_MSM8974_G2_OPT_AU)
 	if(ts->fw_info.fw_setting.ic_chip_rev == TOUCH_CHIP_REV_A) {
 		TOUCH_INFO_MSG("[%s]Touch IC Rev_A, not support knock on\n", __func__);
@@ -4967,7 +4970,7 @@ static LGE_TOUCH_ATTR(ime_status, S_IRUGO | S_IWUSR, show_ime_drumming_status, s
 #if defined(CONFIG_LGE_VU3_TOUCHSCREEN) || defined(CONFIG_LGE_Z_TOUCHSCREEN)
 static LGE_TOUCH_ATTR(lpwg_notify, S_IRUGO | S_IWUSR, NULL, store_touch_gesture);
 #else
-static LGE_TOUCH_ATTR(touch_gesture, S_IRUGO | S_IWUSR, show_touch_gesture, store_touch_gesture);
+static LGE_TOUCH_ATTR(touch_gesture, S_IRUGO, show_touch_gesture, store_touch_gesture);
 #endif
 #endif
 #endif
