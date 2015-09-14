@@ -537,13 +537,11 @@ static void nightmare_check_cpu(struct cpufreq_nightmare_cpuinfo *this_nightmare
 		return;
 
 	for_each_cpu(j, policy->cpus) {
-		struct cpufreq_nightmare_cpuinfo *j_nightmare_cpuinfo;
+		struct cpufreq_nightmare_cpuinfo *j_nightmare_cpuinfo = &per_cpu(od_nightmare_cpuinfo, j);
 		u64 cur_wall_time, cur_idle_time;
 		unsigned int idle_time, wall_time;
 		unsigned int load;
 		
-		j_nightmare_cpuinfo = &per_cpu(od_nightmare_cpuinfo, j);
-
 		cur_idle_time = get_cpu_idle_time(j, &cur_wall_time, io_busy);
 
 		wall_time = (unsigned int)
@@ -619,7 +617,7 @@ static void do_nightmare_timer(struct work_struct *work)
 static int cpufreq_governor_nightmare(struct cpufreq_policy *policy,
 				unsigned int event)
 {
-	struct cpufreq_nightmare_cpuinfo *this_nightmare_cpuinfo;
+	struct cpufreq_nightmare_cpuinfo *this_nightmare_cpuinfo = &per_cpu(od_nightmare_cpuinfo, policy->cpu);
 	unsigned int cpu = policy->cpu, j;
 	int io_busy = nightmare_tuners_ins.io_is_busy;
 	int rc, delay;
