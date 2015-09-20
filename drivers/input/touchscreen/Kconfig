@@ -1077,6 +1077,11 @@ config TOUCHSCREEN_GT9XX
 
           If unsure, say N.
 
+config STATE_NOTIFIER
+        bool "State Notifier"
+	depends on TOUCHSCREEN_SYNAPTICS_G2
+	default y
+
 config TOUCHSCREEN_SYNAPTICS_DISNEY
 	bool "LGE CORE with Synaptics for Disney"
 	help
@@ -1118,7 +1123,5 @@ config TOUCHSCREEN_SYNAPTICS_TIGERS
 if TOUCHSCREEN_SYNAPTICS_TIGERS
 
 source "drivers/input/touchscreen/g2/Kconfig"
-
-endif
 
 endif
