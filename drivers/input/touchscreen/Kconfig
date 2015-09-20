@@ -1125,3 +1125,5 @@ if TOUCHSCREEN_SYNAPTICS_TIGERS
 source "drivers/input/touchscreen/g2/Kconfig"
 
 endif
+
+endif
