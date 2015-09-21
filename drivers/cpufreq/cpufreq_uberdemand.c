@@ -44,7 +44,7 @@
 #define MIN_FREQUENCY_UP_THRESHOLD		(20)
 #define MAX_FREQUENCY_UP_THRESHOLD		(100)
 #define MIN_FREQUENCY_DOWN_DIFFERENTIAL		(1)
-#define SECOND_PHASE_FREQ			(1958400)
+#define SECOND_PHASE_FREQ			(1267200)
 
 /*
  * The polling frequency of this governor depends on the capability of
