@@ -31,6 +31,8 @@
 #include <linux/mutex.h>
 #include <linux/syscore_ops.h>
 
+#include <mach/cpufreq.h>
+
 #include <trace/events/power.h>
 
 /**
@@ -419,11 +421,15 @@ static ssize_t store_##file_name					\
 (struct cpufreq_policy *policy, const char *buf, size_t count)		\
 {									\
 	unsigned int ret = -EINVAL;					\
+	unsigned int cpu, limited_cpu_freq;				\
 	struct cpufreq_policy new_policy;				\
 									\
 	ret = cpufreq_get_policy(&new_policy, policy->cpu);		\
 	if (ret)							\
 		return -EINVAL;						\
+									\
+	cpu = policy->cpu;						\
+	limited_cpu_freq = get_max_lock(cpu);				\
 									\
 	new_policy.min = new_policy.user_policy.min;			\
 	new_policy.max = new_policy.user_policy.max;			\
@@ -436,8 +442,13 @@ static ssize_t store_##file_name					\
 	if (ret)							\
 		pr_err("cpufreq: Frequency verification failed\n");	\
 									\
-	policy->user_policy.min = new_policy.min;			\
+	if (limited_cpu_freq > 0) {					\
+		if (new_policy.max > limited_cpu_freq)			\
+			new_policy.max = limited_cpu_freq;		\
+	}								\
+									\
 	policy->user_policy.max = new_policy.max;			\
+	policy->user_policy.min = new_policy.min;			\
 									\
 	ret = __cpufreq_set_policy(policy, &new_policy);		\
 									\
